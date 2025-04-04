@@ -3,11 +3,12 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { RegisterDto } from './dto/register.dto';
-import { comparePassword, hashPassword } from '../utils/utility.functions';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+
+import { PrismaService } from '../prisma/prisma.service';
+import { comparePassword, hashPassword } from '../utils/utility.functions';
+import { RegisterDto } from './dto/register.dto';
 import { LogInDto } from './dto/login.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 
