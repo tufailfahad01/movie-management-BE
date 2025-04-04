@@ -36,6 +36,7 @@ export class AuthController {
   @ApiBearerAuth()
   @Patch('resetPassword')
   resetPassword(@Body() resetPasswordDto: ResetPasswordDto, @Req() req) {
-    return this.authService.resetPassword(req.user.userId, resetPasswordDto);
+    console.log("userId", req.user)
+    return this.authService.resetPassword(req.user.id, resetPasswordDto);
   }
 }
