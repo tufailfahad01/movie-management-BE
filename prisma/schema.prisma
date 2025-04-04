@@ -19,3 +19,10 @@ model User {
   password String
   role     Role
 }
+
+model Movie {
+  id          String @id @default(uuid())
+  title       String
+  publishYear Int
+  poster      String
+}

@@ -1,8 +1,6 @@
 import { BadRequestException } from "@nestjs/common";
 import * as bcrypt from 'bcrypt';
 
-
-
 export async function hashPassword(userPassword: string) {
     const saltOrRounds = parseInt(process.env.Salt_Or_Rounds)
     const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);

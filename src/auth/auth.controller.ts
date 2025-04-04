@@ -6,12 +6,13 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+
+import { JwtGuard } from './jwt/jwt.guard';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LogInDto } from './dto/login.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
-import { JwtGuard } from './jwt/jwt.guard';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -21,7 +22,6 @@ export class AuthController {
   @ApiOperation({ summary: 'Register a new user' })
   @Post('register')
   register(@Body() registerDto: RegisterDto) {
-    console.log("into register")
     return this.authService.register(registerDto);
   }
 
@@ -38,5 +38,4 @@ export class AuthController {
   resetPassword(@Body() resetPasswordDto: ResetPasswordDto, @Req() req) {
     return this.authService.resetPassword(req.user.userId, resetPasswordDto);
   }
-
 }

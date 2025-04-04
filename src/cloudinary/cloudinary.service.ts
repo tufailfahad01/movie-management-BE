@@ -1,8 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import { ConfigService } from '@nestjs/config';
-import { Express } from 'express';
 
+import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 @Injectable()
 export class CloudinaryService {
   private readonly allowedMimeTypes = [
@@ -14,7 +13,6 @@ export class CloudinaryService {
     'image/bmp',
     'image/tiff'
   ];
-
 
   constructor(private readonly configService: ConfigService) {
     const cloudName = this.configService.get('CLOUDINARY_CLOUD_NAME');
