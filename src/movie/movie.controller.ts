@@ -14,6 +14,15 @@ import { JwtGuard } from '../auth/jwt/jwt.guard';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { MovieService } from './movie.service';
+import { GetUser } from 'src/auth/jwt/get-user.decorator';
+
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'USER' | 'SUPER_ADMIN'; // Add more roles if needed
+}
 
 @Controller('movie')
 @UseGuards(JwtGuard)
@@ -24,15 +33,15 @@ export class MovieController {
   @Post()
   @ApiOperation({ summary: 'Create a Movie' })
   @ApiResponse({ status: 200, description: 'Get Movie after Creating.' })
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.movieService.create(createMovieDto);
+  create(@Body() createMovieDto: CreateMovieDto, @GetUser() user:User) {
+    return this.movieService.create(createMovieDto, user);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all Movies' })
   @ApiResponse({ status: 200, description: 'Get list of all Movies.' })
-  findAll() {
-    return this.movieService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.movieService.findAll(user);
   }
 
   @Get(':id')

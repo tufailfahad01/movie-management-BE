@@ -4,13 +4,22 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'USER' | 'SUPER_ADMIN'; // Add more roles if needed
+}
+
 @Injectable()
 export class MovieService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createMovieDto: CreateMovieDto) {
+  async create(createMovieDto: CreateMovieDto, user: User) {
     try {
-      const movie = await this.prisma.movie.create({ data: createMovieDto });
+      const movie = await this.prisma.movie.create({
+        data: { ...createMovieDto, userId: user.id },
+      });
       return {
         success: true,
         data: movie,
@@ -21,9 +30,11 @@ export class MovieService {
     }
   }
 
-  async findAll() {
+  async findAll(user: User) {
     try {
-      const movies = await this.prisma.movie.findMany();
+      const movies = await this.prisma.movie.findMany({
+        where: { userId: user.id },
+      });
       return {
         success: true,
         data: movies,
